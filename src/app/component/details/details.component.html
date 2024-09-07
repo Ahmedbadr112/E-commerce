@@ -1,0 +1,25 @@
+<h2 class="text-main text-4xl text-center my-5">Details product</h2>
+@if(detailProduct){
+<section class="flex flex-row justify-center items-center">
+  <div class="w-96">
+    <img
+      [src]="detailProduct.imageCover"
+      class="w-full h-96 p-10"
+      [alt]="detailProduct.title"
+    />
+  </div>
+  <div>
+    <h3 class="text-main text-2xl">{{ detailProduct.title }}</h3>
+    <p class="text-gray-400">{{ detailProduct.description }}</p>
+    <h4 class="text-main text-lg">{{ detailProduct.category.name }}</h4>
+    <div class="flex flex-row justify-between items-center">
+      <p>{{ detailProduct.price }} Egp</p>
+      <span
+        >{{ detailProduct.ratingsAverage }}
+        <span class="text-yellow-300"><i class="fa-solid fa-star"></i></span>
+      </span>
+    </div>
+    <button class="btn-main w-full my-5">add to cart</button>
+  </div>
+</section>
+}

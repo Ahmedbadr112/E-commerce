@@ -1,0 +1,210 @@
+<section
+  class="text-main bg-main-light show shadow-gray-600 shadow-2xl rounded-xl p-10 w-3/4 mx-auto my-5 mt-10"
+>
+  <h1 class="text-main text-4xl text-center mb-4">Rgeister Now:</h1>
+
+  <div class="container mx-auto">
+    <form
+      class="relative"
+      [formGroup]="registerForm"
+      (ngSubmit)="( registerSubmit())"
+    >
+      <div class="mb-5">
+        <label
+          for="name"
+          class="block text-main text-xl mb-2 font-medium text-gray-900 dark:text-white"
+          >Your name</label
+        >
+        <input
+          [ngClass]="{
+            'is-valid':
+              !registerForm.get('name')?.errors &&
+              registerForm.get('name')?.touched,
+            'is-invalid':
+              registerForm.get('name')?.errors &&
+              registerForm.get('name')?.touched
+          }"
+          type="name"
+          id="name"
+          class="bg-gray-50 border border-gray-300 shadow-md text-gray-900 text-main text-xl rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+          placeholder="Name"
+          required
+          formControlName="name"
+        />
+        @if (registerForm.get('name')?.errors &&
+        (registerForm.get('name')?.touched ||registerForm.get('name')?.dirty)) {
+        <div
+          class="p-4 my-4 text-sm shadow-lg text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+          role="alert"
+        >
+          @if (registerForm.get('name')?.getError('required')) {
+          <p>
+            <span class="font-medium">Name required</span> Change a few things
+            up and try submitting again.
+          </p>
+          } @else if (registerForm.get('name')?.getError('minlength')) {
+          <p>
+            <span class="font-medium"
+              >name should be more than or equal 3 chars</span
+            >
+            Change a few things up and try submitting again.
+          </p>
+          } @else if (registerForm.get('name')?.getError('maxlength')) {
+          <p>
+            <span class="font-medium"
+              >name should be less than or equal 20 chars</span
+            >
+            Change a few things up and try submitting again.
+          </p>
+          }
+        </div>
+        }
+      </div>
+      <div class="mb-5">
+        <label
+          for="email"
+          class="block mb-2 text-main text-xl font-medium text-gray-900 dark:text-white"
+          >Your email</label
+        >
+        <input
+          type="email"
+          id="email"
+          class="bg-gray-50 border border-gray-300 shadow-md text-gray-900 text-main text-xl rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+          placeholder="name@email.com"
+          required
+          formControlName="email"
+        />
+        @if (registerForm.get('email')?.errors &&
+        registerForm.get('email')?.touched) {
+        <div
+          class="p-4 my-4 text-sm shadow-lg text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+          role="alert"
+        >
+          @if (registerForm.get('email')?.getError('required')) {
+          <p>
+            <span class="font-medium">email required</span> Change a few things
+            up and try submitting again.
+          </p>
+          } @else if (registerForm.get('email')?.getError('email')) {
+          <p>
+            <span class="font-medium">Enter valid email</span>
+            Change a few things up and try submitting again.
+          </p>
+          }
+        </div>
+        }
+      </div>
+      <div class="mb-5">
+        <label
+          for="password"
+          class="block mb-2 text-main text-xl font-medium text-gray-900 dark:text-white"
+          >Your password</label
+        >
+        <input
+          type="password"
+          id="password"
+          class="bg-gray-50 border border-gray-300 shadow-md text-gray-900 text-main text-xl rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+          required
+          formControlName="password"
+        />
+        @if (registerForm.get('password')?.errors &&
+        registerForm.get('password')?.touched) {
+        <div
+          class="p-4 my-4 text-sm shadow-lg text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+          role="alert"
+        >
+          @if (registerForm.get('password')?.getError('required')) {
+          <p>
+            <span class="font-medium">password required</span> Change a few
+            things up and try submitting again.
+          </p>
+          } @else if (registerForm.get('password')?.getError('pattern')) {
+          <p>
+            <span class="font-medium">enter valid password</span>
+            Change a few things up and try submitting again.
+          </p>
+          }
+        </div>
+        }
+      </div>
+      <div class="mb-5">
+        <label
+          for="rePassword"
+          class="block mb-2 font-medium text-main text-xl dark:text-white"
+          >Repassword</label
+        >
+        <input
+          type="password"
+          id="rePassword"
+          class="bg-gray-50 border border-gray-300 shadow-md text-main text-xl rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+          required
+          formControlName="rePassword"
+        />
+        @if (registerForm.getError('mismatch')&&
+        registerForm.get('rePassword')?.touched) {
+        <div
+          class="p-4 my-4 text-sm shadow-lg text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+          role="alert"
+        >
+          <p>
+            <span class="font-medium">password confirmation invalid</span>
+            Change a few things up and try submitting again.
+          </p>
+        </div>
+        }
+      </div>
+      <div class="mb-5">
+        <label
+          for="phone"
+          class="block mb-2 text-xl font-medium text-main dark:text-white"
+          >phone</label
+        >
+        <input
+          type="text"
+          id="phone"
+          class="bg-gray-50 border border-gray-300 shadow-md text-main text-xl rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+          required
+          formControlName="phone"
+        />
+        @if (registerForm.get('phone')?.errors &&
+        registerForm.get('phone')?.touched) {
+        <div
+          class="p-4 my-4 text-sm shadow-lg text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+          role="alert"
+        >
+          @if (registerForm.get('phone')?.getError('required')) {
+          <p>
+            <span class="font-medium">phone required</span> Change a few things
+            up and try submitting again.
+          </p>
+          } @else if (registerForm.get('phone')?.getError('pattern')) {
+          <p>
+            <span class="font-medium">enter valid phone</span>
+            Change a few things up and try submitting again.
+          </p>
+          }
+        </div>
+        }
+      </div>
+
+      <button
+        [disabled]="registerForm.invalid || isLoading"
+        type="submit"
+        class="btn-main ms-auto block my-5"
+      >
+        register @if (isLoading) {
+        <span><i class="fas fa-spin fa-spinner"></i></span>}
+      </button>
+      @if (msgErr) {
+      <div
+        class="p-4 my-4 text-sm shadow-lg text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+        role="alert"
+      >
+        <p>
+          <span class="font-medium">Account alredy exist</span>
+        </p>
+      </div>
+      }
+    </form>
+  </div>
+</section>

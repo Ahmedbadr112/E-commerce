@@ -1,0 +1,35 @@
+<section
+  class="bg-main-light p-10 rounded w-5/6 container my-5 shadow-lg mx-auto"
+>
+  <h1 class="text-main text-2xl text-center">shipping Adaress</h1>
+  <form (ngSubmit)="orderSubmit()" [formGroup]="orders" class="w-full">
+    <div class="my-2">
+      <label for="details">Details</label
+      ><input
+        formControlName="details"
+        class="bg-gray-50 border w-full border-gray-300 shadow-md text-green-900 text-main text-xl rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 dark:bg-green-700 dark:border-green-600 dark:placeholder-green-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+        id="details"
+        type="text"
+      />
+    </div>
+    <div class="my-2">
+      <label for="city">City</label
+      ><input
+        formControlName="city"
+        class="bg-gray-50 border w-full border-gray-300 shadow-md text-green-900 text-main text-xl rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 dark:bg-green-700 dark:border-green-600 dark:placeholder-green-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+        id="city"
+        type="text"
+      />
+    </div>
+    <div class="my-2">
+      <label for="phone">Phone</label
+      ><input
+        formControlName="phone"
+        class="bg-gray-50 border w-full border-gray-300 shadow-md text-green-900 text-main text-xl rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 dark:bg-green-700 dark:border-green-600 dark:placeholder-green-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+        id="phone"
+        type="tel"
+      />
+    </div>
+    <button class="btn-main my-5 capitalize">check out</button>
+  </form>
+</section>

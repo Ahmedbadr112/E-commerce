@@ -1,0 +1,61 @@
+<section>
+  <h2 class="text-main text-4xl text-center align-top my-5">popular product</h2>
+  <input
+    [ngModel]="text"
+    type="search"
+    placeholder="search by name"
+    class="bg-gray-50 border w-96 my-2 mx-auto border-gray-300 shadow-md text-green-900 text-main text-xl rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 dark:bg-green-700 dark:border-green-600 dark:placeholder-green-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+  />
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 px-5 gap-4 w-fit mx-auto my-5"
+  >
+    @for (product of productList|search:text; track product.id) {
+
+    <div
+      class="max-w-sm px-2 product bg-white border border-green-200 rounded-lg shadow flex flex-col justify-center dark:bg-green-800 dark:border-green-700"
+    >
+      <div [routerLink]="['/details', product.id]">
+        <img
+          width="250px"
+          height="200px
+  "
+          class="rounded-t-lg object-cover"
+          [src]="product.imageCover"
+          [alt]="product.title"
+        />
+
+        <div class="p-5">
+          <div>
+            <h4 class="text-md text-green-500 capitalize text-left">
+              {{ product.category.name }}
+            </h4>
+            <h5
+              class="mb-2 text-xl text-left font-bold tracking-tight text-gray-900 dark:text-white"
+            >
+              {{ product.title | term : 2 }}
+            </h5>
+          </div>
+
+          <div class="flex flex-row justify-between my-3 items-center">
+            <span class="text-xl text-gray-700 font-bold">{{
+              product.price | currency : "EGP "
+            }}</span
+            ><span
+              >{{ product.ratingsAverage }}
+              <span class="text-yellow-300"
+                ><i class="fa-solid fa-star"></i
+              ></span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <button
+        (click)="addToCart(product.id)"
+        class="btn-main rounded-md mb-3 px-2 block ms-auto"
+      >
+        Add to cart <span><i class="fa-solid fa-cart-shopping"></i></span>
+      </button>
+    </div>
+    }
+  </div>
+</section>
