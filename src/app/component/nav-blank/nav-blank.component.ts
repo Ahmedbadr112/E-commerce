@@ -33,5 +33,17 @@ export class NavBlankComponent implements OnInit {
   }
   logOut(): void {
     this._AuthServices.logOut();
+  } 
+  isNavbarOpen = false;
+
+toggleNavbar() {
+  this.isNavbarOpen = !this.isNavbarOpen;
+  const navbar = document.getElementById('navbar-default');
+  if (this.isNavbarOpen) {
+    navbar?.classList.remove('hidden');
+  } else {
+    navbar?.classList.add('hidden');
   }
+}
+
 }
