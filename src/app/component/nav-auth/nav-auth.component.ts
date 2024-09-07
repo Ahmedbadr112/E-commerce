@@ -15,5 +15,14 @@ export class NavAuthComponent implements OnInit {
   ngOnInit(): void {
     this._Flowbiteservices.loadFlowbite(() => {});
   }
-
+  isNavbarOpen = false;
+  toggleNavbar() {
+    this.isNavbarOpen = !this.isNavbarOpen;
+    const navbar = document.getElementById('navbar-default');
+    if (this.isNavbarOpen) {
+      navbar?.classList.remove('hidden');
+    } else {
+      navbar?.classList.add('hidden');
+    }
+  }
 }
