@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [RouterLink, SearchPipe,TermPipe,CurrencyPipe,FormsModule],
+  imports: [RouterLink, SearchPipe, TermPipe, CurrencyPipe, FormsModule],
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss',
 })
@@ -24,6 +24,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   productList: IProduct[] = [];
   text: string = '';
   productSubscription!: Subscription;
+
   ngOnInit(): void {
     this.productSubscription = this._product.getAllProducts().subscribe({
       next: (res) => {
@@ -35,18 +36,22 @@ export class ProductComponent implements OnInit, OnDestroy {
       },
     });
   } 
+
+  // Fixing addToCart
   addToCart(id: string): void {
     this._CartService.addCart(id).subscribe({
       next: (res) => {
         console.log(res);
-        this._Toaster.success('product added successfully');
+        this._Toaster.success('Product added successfully');
         this._CartService.cartNumber.set(res.numOfCartItems);
       },
       error: (err) => {
-        console.log(err);
+        console.error('Error adding product to cart:', err);
+        this._Toaster.error('Failed to add product to cart');
       },
     });
   }
+
   ngOnDestroy(): void {
     this.productSubscription?.unsubscribe();
   }

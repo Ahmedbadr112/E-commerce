@@ -9,21 +9,20 @@
   <div
     class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 px-5 gap-4 w-fit mx-auto my-5"
   >
-    @for (product of productList|search:text; track product.id) {
+    @for (product of productList; track product.id) {
 
-    <div
+      <div
       class="max-w-sm px-2 product bg-white border border-green-200 rounded-lg shadow flex flex-col justify-center dark:bg-green-800 dark:border-green-700"
     >
-      <div [routerLink]="['/details', product.id]">
+      <div >
         <img
           width="250px"
-          height="200px
-  "
+          height="200px"
           class="rounded-t-lg object-cover"
           [src]="product.imageCover"
           [alt]="product.title"
         />
-
+   
         <div class="p-5">
           <div>
             <h4 class="text-md text-green-500 capitalize text-left">
@@ -32,19 +31,19 @@
             <h5
               class="mb-2 text-xl text-left font-bold tracking-tight text-gray-900 dark:text-white"
             >
-              {{ product.title | term : 2 }}
+              {{ product.title | term: 2 }}
             </h5>
           </div>
-
+   
           <div class="flex flex-row justify-between my-3 items-center">
             <span class="text-xl text-gray-700 font-bold">{{
-              product.price | currency : "EGP "
-            }}</span
-            ><span
-              >{{ product.ratingsAverage }}
-              <span class="text-yellow-300"
-                ><i class="fa-solid fa-star"></i
-              ></span>
+              product.price | currency: 'EGP '
+            }}</span>
+            <span>
+              {{ product.ratingsAverage }}
+              <span class="text-yellow-300">
+                <i class="fa-solid fa-star"></i>
+              </span>
             </span>
           </div>
         </div>
@@ -56,6 +55,7 @@
         Add to cart <span><i class="fa-solid fa-cart-shopping"></i></span>
       </button>
     </div>
+   
     }
   </div>
 </section>

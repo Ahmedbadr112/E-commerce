@@ -19,7 +19,6 @@ import { TermPipe } from '../../core/pipes/term.pipe';
 import { CategoriesService } from '../../core/servcies/categories.service';
 import { ProductService } from '../../core/servcies/product.service';
 import { CartService } from './../../core/servcies/cart.service';
-
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 
@@ -50,10 +49,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   private readonly _CartService = inject(CartService);
   private readonly _Toaster = inject(ToastrService);
   private readonly _Spinner = inject(NgxSpinnerService);
+
   productList: IProduct[] = [];
   categoriesList: ICategories[] = [];
   text: string = '';
-  productSubscription!: Subscription;
+
+  // Subscriptions
+  private categoriesSubscription!: Subscription;
+  private productSubscription!: Subscription;
+  private cartSubscription!: Subscription;
+
   customOptionsCat: OwlOptions = {
     loop: true,
     mouseDrag: true,
@@ -66,21 +71,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     navSpeed: 700,
     navText: ['', ''],
     responsive: {
-      0: {
-        items: 1,
-      },
-      400: {
-        items: 2,
-      },
-      740: {
-        items: 3,
-      },
-      940: {
-        items: 4,
-      },
+      0: { items: 1 },
+      400: { items: 2 },
+      740: { items: 3 },
+      940: { items: 4 },
     },
     nav: true,
   };
+
   customOptionsMain: OwlOptions = {
     loop: true,
     mouseDrag: true,
@@ -95,41 +93,49 @@ export class HomeComponent implements OnInit, OnDestroy {
     items: 1,
     nav: false,
   };
+
   ngOnInit(): void {
     this._Spinner.show('loading-1');
-    this._Categories.getAllCategories().subscribe({
+
+    this.categoriesSubscription = this._Categories.getAllCategories().subscribe({
       next: (res) => {
         console.log(res.data);
         this.categoriesList = res.data;
         this._Spinner.hide('loading-1');
       },
-      error: (err) => {
-        console.log(err);
-      },
+      error: (err) => console.log(err),
     });
+
     this.productSubscription = this._product.getAllProducts().subscribe({
       next: (res) => {
         console.log(res.data);
         this.productList = res.data;
       },
-      error: (err) => {
-        console.log(err);
-      },
+      error: (err) => console.log(err),
     });
   }
+
   addToCart(id: string): void {
-    this._CartService.addCart(id).subscribe({
+    this.cartSubscription = this._CartService.addCart(id).subscribe({
       next: (res) => {
         console.log(res);
-        this._Toaster.success('product added successfully');
+        this._Toaster.success('Product added successfully');
         this._CartService.cartNumber.set(res.numOfCartItems);
       },
-      error: (err) => {
-        console.log(err);
-      },
+      error: (err) => console.log(err),
     });
   }
+
   ngOnDestroy(): void {
-    this.productSubscription?.unsubscribe();
+    // Unsubscribing from all active subscriptions
+    if (this.categoriesSubscription) {
+      this.categoriesSubscription.unsubscribe();
+    }
+    if (this.productSubscription) {
+      this.productSubscription.unsubscribe();
+    }
+    if (this.cartSubscription) {
+      this.cartSubscription.unsubscribe();
+    }
   }
 }

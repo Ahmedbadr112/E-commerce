@@ -48,7 +48,7 @@
   </div>
 </section>
 <section class="my-4 px-2">
-  <h3 class="text-main text-4xl text-center my-5">popuar catgeories</h3>
+  <h3 class="text-main text-3xl text-center my-5">popuar catgeories</h3>
   <owl-carousel-o [options]="customOptionsCat">
     @for (cat of categoriesList; track cat._id) {
     <ng-template carouselSlide>
@@ -59,7 +59,7 @@
   </owl-carousel-o>
 </section>
 <section class="flex flex-col justify-center">
-  <h2 class="text-main text-4xl text-center align-top my-5">popular product</h2>
+  <h2 class="text-main text-3xl text-center align-top my-5">popular product</h2>
   <input 
   [(ngModel)]="text"
     type="search"

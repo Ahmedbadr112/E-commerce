@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -8,6 +8,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrderService } from '../../core/servcies/order.service';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-orders',
@@ -16,7 +17,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.scss'],
 })
-export class OrdersComponent implements OnInit {
+export class OrdersComponent implements OnInit, OnDestroy {
   cartId: string | null = '';
   private readonly _ActivatedRoute = inject(ActivatedRoute);
   private readonly _OrderService = inject(OrderService);
@@ -32,24 +33,29 @@ export class OrdersComponent implements OnInit {
     city: new FormControl(null, [Validators.required]),
   });
 
+  // Subscriptions
+  private routeSubscription!: Subscription;
+  private orderSubscription!: Subscription;
+
   orderSubmit(): void {
-    console.log(this.orders.value);
-    this._OrderService.checkout(this.cartId, this.orders.value).subscribe({
-      next: (res) => {
-        console.log(res);
-        if (res.status === 'success') {
-          this._Toaster.success('checkout completed successfully');
-          window.open(res.session.url);
-        }
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    if (this.orders.valid && this.cartId) {
+      this.orderSubscription = this._OrderService.checkout(this.cartId, this.orders.value).subscribe({
+        next: (res) => {
+          console.log(res);
+          if (res.status === 'success') {
+            this._Toaster.success('Checkout completed successfully');
+            window.open(res.session.url);
+          }
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    }
   }
 
   ngOnInit(): void {
-    this._ActivatedRoute.paramMap.subscribe({
+    this.routeSubscription = this._ActivatedRoute.paramMap.subscribe({
       next: (res) => {
         this.cartId = res.get('id');
         console.log(this.cartId);
@@ -58,5 +64,15 @@ export class OrdersComponent implements OnInit {
         console.log(err);
       },
     });
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe from route and order service subscriptions
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
+    }
+    if (this.orderSubscription) {
+      this.orderSubscription.unsubscribe();
+    }
   }
 }
